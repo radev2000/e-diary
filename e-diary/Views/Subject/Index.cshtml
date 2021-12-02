@@ -1,0 +1,51 @@
+﻿@model IEnumerable<e_diary.Models.Subject>
+
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h1>Subject list</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Subject" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Subject Name">
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit" value="Search" />
+        </span>
+    </form>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Teacher.FName)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+    </td>
+</tr>}
+    </tbody>
+</table>

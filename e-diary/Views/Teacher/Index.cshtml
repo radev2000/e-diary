@@ -1,0 +1,82 @@
+﻿@*model IPagedList<e_diary.Models.Teacher>*@
+@model IEnumerable<e_diary.Models.Teacher>
+
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+                Pager pager = new Pager();
+                int pageNo = 0;
+                if (ViewBag.Pager != null)
+                {
+                    pager = ViewBag.Pager;
+                    pageNo = pager.CurrentPage;
+                } }
+
+<h1>Teacher List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Teacher" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Teacher First Name">
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit" value="Search" />
+        </span>
+    </form>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().LName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().HireDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Rating)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.HireDate)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+    </td>
+</tr>}
+    </tbody>
+</table>
+
+
+
+@*@Html.PagedListPager(Model, i=>Url.Action("Index", "TeacherSearch", new {i, search=Reques.QueryString["search"] }))*@

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<e_diary.Models.Student>
+
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+                Pager pager = new Pager();
+                int pageNo = 0;
+                if (ViewBag.Pager != null)
+                {
+                    pager = ViewBag.Pager;
+                    pageNo = pager.CurrentPage;
+                } }
+
+<h1>Students List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<vc:search-bar search-pager="@ViewBag.SearchPager">
+</vc:search-bar>
+
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Student" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Student First Name">
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit" value="Search" />
+        </span>
+    </form>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GetsScholarship)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Group)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.GetsScholarship)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+    </td>
+</tr>}
+    </tbody>
+</table>
+
+<partial name="_pager" model="@pager" />
